@@ -158,7 +158,7 @@ with tab1:
     selected_cluster_label = df[df["disease"] == selected_disease]["cluster"].values[0]
     cluster_members = df[df["cluster"] == selected_cluster_label]["disease"].tolist()
 
-    st.subheader(f"Cluster Members of Selected Disease `{get_disease_label(selected_disease)}`")
+    st.subheader(f"Cluster Members of Selected Disease `{selected_disease}` (Cluster {selected_cluster_label})")
     cluster_similarities = jcmat.loc[selected_disease, cluster_members]
     st.selectbox("Cluster Members", [f"{get_disease_label(d)} (Similarity: {cluster_similarities[d]:.2f})" for d in cluster_similarities.index])
 
@@ -166,12 +166,14 @@ with tab1:
     top_similar = jcmat.loc[selected_disease].drop(selected_disease).sort_values(ascending=False).head(top_n)
     st.selectbox("Similar Diseases", [f"{get_disease_label(d)} (Similarity: {top_similar[d]:.2f})" for d in top_similar.index])
 
+    st.subheader(f"Heatmap: Internal Similarities Among Top {top_n} Similar Diseases")
     heatmap_data_2 = jcmat.loc[top_similar.index, top_similar.index]
     fig2, ax2 = plt.subplots(figsize=(10, 8))
     sns.heatmap(heatmap_data_2, cmap="viridis", annot=False, xticklabels=True, yticklabels=True, ax=ax2)
     plt.xticks(rotation=90)
     st.pyplot(fig2)
 
+    st.subheader(f"Heatmap: Similarities Within Selected Cluster (Cluster {selected_cluster_label})")
     cluster_heatmap_data = jcmat.loc[cluster_members, cluster_members]
     fig3, ax3 = plt.subplots(figsize=(10, 8))
     sns.heatmap(cluster_heatmap_data, cmap="viridis", annot=False, xticklabels=True, yticklabels=True, ax=ax3)

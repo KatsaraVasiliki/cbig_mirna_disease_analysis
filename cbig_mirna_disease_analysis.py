@@ -13,7 +13,7 @@ import networkx as nx
 from pyvis.network import Network
 import streamlit.components.v1 as components
 
-file_id = "1k88yasI7IokJuEMfhzB-vpDnHFRkQerA"
+file_id = "1V_Q6CDLeBFSaZYKpWofazgifgoxBLF3N"
 csv_url = f"https://drive.google.com/uc?export=download&id={file_id}"
 
 jcmat = pd.read_csv(csv_url, index_col=0)
@@ -28,7 +28,7 @@ distance_matrix = 1 - jcmat.values
 # id_to_names = mapping_df.groupby("disease_mesh_id")["disease_mesh_name"].apply(lambda x: list(set(", ".join(x).split(", ")))).to_dict()
 
 # Load mapping of MeSH IDs to names from Google Drive
-mesh_file_id = "1ED2PXVaUG0ka8qlJVU9FLq7daUdC-v_V"
+mesh_file_id = "1GUWh43yUF4E8ySZgPkSLK6n3bu4xPIOp"
 mesh_csv_url = f"https://drive.google.com/uc?export=download&id={mesh_file_id}"
 mapping_df = pd.read_csv(mesh_csv_url)
 id_to_names = mapping_df.groupby("disease_mesh_id")["disease_mesh_name"].apply(lambda x: list(set(", ".join(x).split(", ")))).to_dict()
